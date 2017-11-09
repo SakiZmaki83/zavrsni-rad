@@ -117,7 +117,7 @@ include("header.php");
                }
            ?>
 
-            <ul>
+  <ul id="comments">
            <?php
            foreach ($comments as $comment)
                                               {          
@@ -132,6 +132,8 @@ include("header.php");
             <?php
 }
 ?>
+
+
 
   </ul>
            
@@ -155,25 +157,19 @@ include("header.php");
 </main><!-- /.container -->
 
 <script>
-   function toogleButton() {
-       var button = document.getElementById("button");
-       var comments = document.getElementById("comments");
-       if (comments.classList.contains("hidden"))
-        {
-           comments.classList.remove("hidden");
-           button.innerHTML="Hide comments";
-       }else{
-           comments.classList.add("hidden");
-           button.innerHTML="Show comments";
-       }
-       
-   }
-
-
-
-
-
-
+ function toogleButton() {
+     var button = document.getElementById("button");
+     var comments = document.getElementById("comments");
+     if (comments.classList.contains("hidden"))
+      {
+         comments.classList.remove("hidden");
+         button.innerHTML="Hide comments";
+     }else{
+         comments.classList.add("hidden");
+         button.innerHTML="Show comments";
+     }
+   
+ }
 </script>
 
 <div class="container">
