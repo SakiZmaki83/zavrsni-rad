@@ -1,49 +1,19 @@
-<?php
-           include("sidebar.php");
-       ?>
 
 <?php
+
+   $servername = "127.0.0.1";
+   $username = "root";
+   $password = "vivify";
+   $dbname = "blog";
    try {
-
-       $conn = new PDO('mysql:host=127.0.0.1;dbname=blog', 'root', 'vivify');
-
-       $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-       
-
+       $connection = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+       $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
    }
-
    catch(PDOException $e)
-
    {
-
        echo $e->getMessage();
-
    }
-
-
-
-
-   $statement = $conn->prepare('SELECT * FROM posts');
-
-   $statement->execute();
-
-   $statement->setFetchMode(PDO::FETCH_ASSOC);
-
-   $posts = $statement->fetchAll();
-
-
-
-
 ?>
-
-
-
-
-
-
-
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -63,7 +33,7 @@
    <!-- Custom styles for this template -->
    <link href="styles/blog.css" rel="stylesheet">
 
-   <link rel="stylesheet" type="text/css" href="styles/styles.css">
+   <link rel="stylesheet" type="text/css" href="styles/new.css">
 </head>
 
 
@@ -81,29 +51,36 @@ include("header.php");
 
 <main role="main" class="container">
 
-   <?php
-
-   
-   foreach ($posts as $post){
-
-   ?>
+ 
 
    <div class="row">
 
        <div class="col-sm-8 blog-main">
-       
-           <div class="blog-post">
+
+        <?php
+               $sql = "SELECT * FROM posts ORDER BY created_at DESC";
+               $statement = $connection->prepare($sql);
+               $statement->execute();
+               $statement->setFetchMode(PDO::FETCH_ASSOC);
+               $posts = $statement->fetchAll();
+    ?>
            
-           <a href="#" <h2 class="blog-post-title"><?php echo $post['title'] ?></h2> </a>
-               <p class="blog-post-meta"><p> <?php echo $post['created_at'] ?></p> <a href="#"> <?php echo $post['author'] ?></a></p>
-
-
-               <p></p>
-           </div><!-- /.blog-post -->
-
-           <?php
-           }
-           ?>
+  <?php foreach ($posts as $post)
+  {          
+   ?>
+           <div class="blog-post">
+               <h2 class="blog-post-title"><a href="single-post.php?post_id=<?php echo($post['id']) ?>"><?php echo($post['title']) ?></a></h2>
+               <p class="blog-post-meta"><?php echo $post["created_at"]?> <a href="#"><?php echo $post["author"]?></a></p>
+               <p>
+                   <?php
+                       echo $post["body"]
+                   ?>
+               </p>
+               
+           </div>
+   <?php
+}
+?>
 
            <nav class="blog-pagination">
                <a class="btn btn-outline-primary" href="#">Older</a>
@@ -113,11 +90,11 @@ include("header.php");
        </div><!-- /.blog-main -->
 
 
-   </div><!-- /.row -->
-
    <?php
        include("sidebar.php");
    ?>
+
+   </div><!-- /.row -->
 
 
 </main><!-- /.container -->

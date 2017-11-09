@@ -25,3 +25,8 @@ a:hover {
     color: hotpink;
     text-underline-position: under;
 }
+
+.hidden{
+	display:none;
+}
+
