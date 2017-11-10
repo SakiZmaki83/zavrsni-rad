@@ -114,12 +114,10 @@ include("header.php");
 <label for="email">your email</label>
 <input type="email" id="email" placeholder="john@doe"/><br> -->
 
-<label >Autor</label>
+<label >Autor</label><br>
 <input type="text" name="author"><br>
-<label>comment</label>
-<input type="text" name="comments"><br>
 <label>Add comments</label><br>
-<input type="hidden" name="post_id" value="<?php echo $_GET['post_id'] ?>" ><br><br>
+<input type="text" name="post_id" value="<?php echo $_GET['post_id'] ?>" ><br><br>
 <button type="Submit">Submit</button>
 
    </form>
@@ -146,10 +144,14 @@ include("header.php");
                <li><p><?php
                echo $comment["author"]
                ?>
+    
                </p><?php echo $comment["text"]?></li>
+
+               <form action="delete-comment.php" method="POST">
                
-
-
+<button type="submit" class="btn btn-default">delete</button>
+<input type="hidden" value=<?php echo $comment["id"]?> name="id"/>
+<input type="hidden" value=<?php echo $_GET['post_id']?> name="post_id"/>
             <?php
 }
 ?>
@@ -173,7 +175,12 @@ include("header.php");
    </div><!-- /.row -->
 
   
-
+<button class="btn btn-primary" type="submit">delete this post</button>
+<label>Do you realy want to do this?</label>
+<input id="callback" type="checkbox"/>
+<label for="callback">Yes</label>
+<input id="callback" type="checkbox"/>
+<label for="callback">No</label>
 
 </main><!-- /.container -->
 
