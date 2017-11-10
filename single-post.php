@@ -76,6 +76,9 @@ include("header.php");
 ?>
 
 
+
+
+
 <main role="main" class="container">
 
  
@@ -95,7 +98,6 @@ include("header.php");
            ?>
 
        
-       
            <div class="blog-post">
            
            <a href="#" <h2 class="blog-post-title"><?php echo $post['title'] ?></h2> </a>
@@ -106,6 +108,22 @@ include("header.php");
 
            </div><!-- /.blog-post -->
 
+           <form action="create-comments.php" method="POST">
+<!-- <label for="name">your name</label>
+<input type="text" id="name" placeholder="John Doe"/><br>
+<label for="email">your email</label>
+<input type="email" id="email" placeholder="john@doe"/><br> -->
+
+<label >Autor</label>
+<input type="text" name="author"><br>
+<label>comment</label>
+<input type="text" name="comments"><br>
+<label>Add comments</label><br>
+<input type="hidden" name="post_id" value="<?php echo $_GET['post_id'] ?>" ><br><br>
+<button type="Submit">Submit</button>
+
+   </form>
+
            <!--ovde sam pocela nove promene -->
             <?php
                if (isset($_GET['post_id'])) {
@@ -115,9 +133,12 @@ include("header.php");
                    $statement->setFetchMode(PDO::FETCH_ASSOC);
                    $comments = $statement->fetchAll();
                }
-           ?>
+           ?><br>
 
-  <ul id="comments">
+  <div class="container">
+   <button id="button" type=button class="btn btn=default" onclick=toogleButton()>Hide comments</button>
+   </div>
+   <ul id="comments"
            <?php
            foreach ($comments as $comment)
                                               {          
@@ -156,6 +177,19 @@ include("header.php");
 
 </main><!-- /.container -->
 
+
+
+
+
+
+
+<?php
+
+include("footer.php");
+
+?>
+
+
 <script>
  function toogleButton() {
      var button = document.getElementById("button");
@@ -171,20 +205,6 @@ include("header.php");
    
  }
 </script>
-
-<div class="container">
-                <button id= button type="button" class="btn btn-default" onclick=toogleButton()>hide comments</button>
-           </div>
-
-
-
-
-
-<?php
-
-include("footer.php");
-
-?>
 
 
 
