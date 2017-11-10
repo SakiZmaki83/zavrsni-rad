@@ -18,10 +18,13 @@
    }
 
 
-   $statement = $connection->prepare("INSERT INTO comments (Author, Text, Post_id) VALUES  ('{$_POST['author']');");
+   $createComment = "INSERT INTO comments (author,text, post_id) VALUES ('{$_POST['author']}', '{$_POST['comments']}', '{$_POST['post_id']}')";
+   $statement = $connection->prepare($createComment);
 
    $statement->execute();
-   
+
+   header("location: single-post.php?post_id={$_POST['post_id']}");
+ 
 
 
 
